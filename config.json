@@ -1,0 +1,9 @@
+{
+    "font_size": 228,
+    "font_color": "black",
+    "font_path": "STHUPO.TTF",
+    "json_path": "birthdays.json",
+    "template_image_path": "template.jpg",
+    "default_background_path": "default.jpg",
+    "log_file": "birthday_wisher.log"
+}
