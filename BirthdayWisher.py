@@ -97,9 +97,9 @@ def main():
         logging.error(f"Failed to load config: {e}")
         return
 
-    # 加载生日信息sssss
+    # 加载生日信息
     try:
-        birthdays += load_json(config['json_path'])
+        birthdays = load_json(config['json_path'])
     except Exception as e:
         logging.error(f"Failed to load birthdays: {e}")
         return
