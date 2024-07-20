@@ -80,9 +80,9 @@ def set_desktop_background(image_path):
     设置桌面背景图片(适用于Windows系统)
     :param image_path: 图片路径
     """
-    im = Image.open(image_path).convert('RGB')
-    im.save(image_path.replace(".png",".jpg"))
-    picPath = os.getcwd()+"\\"+image_path.replace(".png",".jpg")
+    #im = Image.open(image_path).convert('RGB')
+    #im.save(image_path.replace(".png",".jpg"))
+    picPath = os.getcwd()+"\\" + image_path
     logging.info(f"Trying to set {picPath} as desktop background.")
     ctypes.windll.user32.SystemParametersInfoW(20, 0, picPath, 3)
 
@@ -103,8 +103,6 @@ def main():
     except Exception as e:
         logging.error(f"Failed to load birthdays: {e}")
         return
-    
-    # print(birthdays)
 
     # 获取今天生日和周末生日名单
     today_birthdays = get_today_birthdays(birthdays)
