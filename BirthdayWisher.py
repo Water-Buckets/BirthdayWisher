@@ -4,7 +4,6 @@ from PIL import Image, ImageDraw, ImageFont
 import os
 import ctypes
 import logging
-import math
 
 def load_json(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -28,25 +27,13 @@ def get_upcoming_weekend_birthdays(birthdays):
 def create_birthday_image(config, today_birthdays, weekend_birthdays):
     # 打开模板图片
     image = Image.open(config['template_image_path'])
-    draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype(config['font_path'], config['font_size'])
-    
+
     width, height = image.size
 
-    wish = ''
-    
-    if today_birthdays:
-        names = '、'.join([entry['name'] for entry in today_birthdays])
-        age = datetime.date.today().year - datetime.datetime.strptime(today_birthdays[0]['birthday'], '%Y-%m-%d').year
-        wish += f"祝{names} {age} 岁生日快乐!"
+    # 字符串拼接
+    wish = ('' if not today_birthdays else f"祝{'、'.join([entry['name'] for entry in today_birthdays])} {datetime.date.today().year - datetime.datetime.strptime(today_birthdays[0]['birthday'], '%Y-%m-%d').year} 岁生日快乐!") + ('' if not weekend_birthdays else "\n\n" + "\n\n".join([f"提前祝{entry['name']} {datetime.date.today().year - datetime.datetime.strptime(entry['birthday'], '%Y-%m-%d').year} 岁生日快乐! ("+ str(datetime.datetime.strptime(entry['birthday'], '%Y-%m-%d').month) + "." +str(datetime.datetime.strptime(entry['birthday'], '%Y-%m-%d').day)+")" for entry in weekend_birthdays]))
 
-    if weekend_birthdays:
-        for entry in weekend_birthdays:
-            name = entry['name']
-            age = datetime.date.today().year - datetime.datetime.strptime(entry['birthday'], '%Y-%m-%d').year
-            wish += f"\n\n提前祝{name} {age} 岁生日快乐! ("+ str(datetime.datetime.strptime(entry['birthday'], '%Y-%m-%d').month) + "." +str(datetime.datetime.strptime(entry['birthday'], '%Y-%m-%d').day)+")"
-    
-    draw.text((width // 2, height // 2), wish, font=font, fill=config['font_color'], anchor='mm')
+    ImageDraw.Draw(image).text((width // 2, height // 2), wish, font=ImageFont.truetype(config['font_path'], config['font_size']), fill=config['font_color'], anchor='mm')
 
     return image
 
@@ -77,7 +64,7 @@ def main():
     today_birthdays = get_today_birthdays(birthdays)
     weekend_birthdays = get_upcoming_weekend_birthdays(birthdays)
 
-    logging.info("Happy birthday "+', '.join([entry['name'] for entry in birthdays]))
+    logging.info("Happy birthday "+', '.join([entry['name'] for entry in today_birthdays + weekend_birthdays]))
 
     # 判断是否需要生成生日祝福图片
     if today_birthdays or weekend_birthdays:
