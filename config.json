@@ -1,8 +1,8 @@
 {
-    "font_size": 228,
-    "font_color": "black",
-    "font_path": "STHUPO.TTF",
-    "json_path": "birthdays.json",
-    "template_image_path": "template.jpg",
-    "default_background_path": "default.jpg"
+  "font_size": 200,
+  "font_color": "black",
+  "font_path": "STHUPO.TTF",
+  "json_path": "birthdays.json",
+  "template_image_path": "template.jpg",
+  "default_background_path": "default.jpg"
 }
