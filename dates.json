@@ -1,0 +1,19 @@
+{
+  "dates": [
+    {
+      "name": "2026.06.07",
+      "date": "2026-06-07",
+      "approximate": false
+    },
+    {
+      "name": "春考",
+      "date": "2026-01-02",
+      "approximate": true
+    },
+    {
+      "name": "等级考",
+      "date": "2026-05-02",
+      "approximate": true
+    }
+  ]
+}
